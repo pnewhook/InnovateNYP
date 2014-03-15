@@ -33,5 +33,10 @@ namespace InnovateNYP.Controllers
         {
             return View();
         }
+
+        public ActionResult Vaccine()
+        {
+            return View();
+        }
     }
 }

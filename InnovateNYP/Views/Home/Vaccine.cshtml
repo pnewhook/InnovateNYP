@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "Medication";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Vaccinations <small>Don't tell Jenny McCarthy</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active"><i class="fa fa-table"></i> Tables</li>
+        </ol>
+    </div>
+</div><!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>Vaccines</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped tablesorter">
+                <thead>
+                    <tr>
+                        <th>Vaccine Name <i class="fa fa-sort"></i></th>
+                        <th>Vaccine Date <i class="fa fa-sort"></i></th>
+                        <th>Facility Name <i class="fa fa-sort"></i></th>
+                        <th>Expiration Date <i class="fa fa-sort"></i></th>
+                        <th>Administrator Name <i class="fa fa-sort"></i></th>
+                        <th>Provider Name <i class="fa fa-sort"></i></th>
+                        <th>Source Name <i class="fa fa-sort"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hep A (ADULT ONLY)</td>
+                        <td>3/13/2016</td>
+                        <td>No Facility Information</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr class="danger">
+                        <td>DTP - Hib</td>
+                        <td>1/9/2011</td>
+                        <td>Audubon Practice: Ob</td>
+                        <td>1/9/2012</td>
+                        <td></td>
+                        <td></td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr>
+                        <td>MMR</td>
+                        <td>5/27/2016</td>
+                        <td>Audubon Practice: Pediatrics</td>
+                        <td>6/1/2017</td>
+                        <td>Pena Andrea</td>
+                        <td>"Garden Matthew</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr>
+                        <td>MMR</td>
+                        <td>3/14/2022</td>
+                        <td>Whs East</td>
+                        <td>6/1/2016</td>
+                        <td>Andrea Tolchinsky</td>
+                        <td>Andrea Tolchinsky</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr class="warning">
+                        <td>MMR</td>
+                        <td>8/24/2010</td>
+                        <td>Washington Heights Family Health Center: Pediatrics</td>
+                        <td>4/1/2014</td>
+                        <td>Jason Wilt</td>
+                        <td>Collette Leider</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr class="danger">
+                        <td>Rubella</td>
+                        <td>11/6/1998</td>
+                        <td>Lmh Adult Inpatient</td>
+                        <td>10/1/2013</td>
+                        <td>Pena Andrea</td>
+                        <td>Pena Andrea</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr>
+                        <td>DTaP</td>
+                        <td>5/24/2013</td>
+                        <td>Audubon Practice: Adult</td>
+                        <td></td>
+                        <td>Jane Crandon</td>
+                        <td>Jane Crandon</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr>
+                        <td>DTaP</td>
+                        <td>1/6/2014</td>
+                        <td>Allen Nursery</td>
+                        <td>3/18/2030</td>
+                        <td>Pena Andrea</td>
+                        <td>Andrea Pena</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr>
+                        <td>DTaP</td>
+                        <td>11/6/2013</td>
+                        <td>Msch - Pediatric Heme/Onc/Bmt Parent/Guardians</td>
+                        <td></td>
+                        <td>Andrea Pena</td>
+                        <td>Andrea Pena</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr class="warning">
+                        <td>DTaP</td>
+                        <td>11/5/1997</td>
+                        <td>Msch - Pediatric Heme/Onc/Bmt Parent/Guardians</td>
+                        <td>4/1/2014</td>
+                        <td>Matthews Mary</td>
+                        <td>Matthews Marys</td>
+                        <td>Ezvac</td>
+                    </tr>
+                    <tr>
+                        <td>HBIG</td>
+                        <td>1/10/2014</td>
+                        <td>Audubon Practice: Ob</td>
+                        <td>6/1/2022</td>
+                        <td>"Matthews Mary"</td>
+                        <td>"Matthews Mary"</td>
+                        <td>Ezvac</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><!-- /.row -->
+@section scripts{
+    <script>
+        $('#vaccine-link').addClass('active');
+    </script>
+}
