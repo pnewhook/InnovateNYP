@@ -187,6 +187,8 @@
     <Content Include="js\flot\jquery.flot.resize.js" />
     <Content Include="js\flot\jquery.flot.tooltip.min.js" />
     <Content Include="js\morris\chart-data-morris.js" />
+    <Content Include="js\morris\morris-0.4.3.min.js" />
+    <Content Include="js\morris\morris.js" />
     <Content Include="js\tablesorter\jquery.tablesorter.js" />
     <Content Include="js\tablesorter\tables.js" />
     <Content Include="Scripts\bootstrap.js" />
