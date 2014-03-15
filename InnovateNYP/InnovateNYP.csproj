@@ -171,6 +171,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\morris-0.4.3.min.css" />
     <Content Include="Content\sb-admin.css" />
     <Content Include="favicon.ico" />
     <Content Include="font-awesome\css\font-awesome.css" />
@@ -178,15 +179,12 @@
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="js\bootstrap.js" />
-    <Content Include="js\bootstrap.min.js" />
     <Content Include="js\flot\chart-data-flot.js" />
     <Content Include="js\flot\excanvas.min.js" />
     <Content Include="js\flot\jquery.flot.js" />
     <Content Include="js\flot\jquery.flot.pie.js" />
     <Content Include="js\flot\jquery.flot.resize.js" />
     <Content Include="js\flot\jquery.flot.tooltip.min.js" />
-    <Content Include="js\jquery-1.10.2.js" />
     <Content Include="js\morris\chart-data-morris.js" />
     <Content Include="js\tablesorter\jquery.tablesorter.js" />
     <Content Include="js\tablesorter\tables.js" />
