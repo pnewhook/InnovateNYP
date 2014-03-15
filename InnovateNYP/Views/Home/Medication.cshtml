@@ -21,9 +21,12 @@
                 <label for="medication" class="sr-only">Medication</label>
                 <input type="text" class="form-control typeahead" id="medication" name="medication" placeholder="Enter a new medication" />
             </div>
-            <button type="button" class="btn btn-default">Check Interactions</button>
+            <button type="button" id="interactions-button" class="btn btn-default">Check Interactions</button>
         </form>
     </div>
+</div>
+<div class="row">
+    <div class="col-lg-12" id="alert-container"></div>
 </div>
 <div class="row">
     <div class="col-lg-12">
@@ -41,7 +44,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr id='N0000021982'>
                         <td>50</td>
                         <td>AUA1</td>
                         <td>Dalteparin Inj</td>
@@ -91,7 +94,7 @@
                         <td>AUC9</td>
                         <td>fentaNYL DRIP</td>
                         <td>1000 microgram/hr</td>
-                        <td><continuous></td>
+                        <td>continuous</td>
                         <td></td>
                         <td>IV</td>
                     </tr>
@@ -125,7 +128,7 @@
                     <tr>
                         <td>69</td>
                         <td>DISC</td>
-                        <td>Influenza Virus Vaccine Inj QUADRIVALENT <3 years old</td>
+                        <td>Influenza Virus Vaccine Inj QUADRIVALENT < 3 years old</td>
                         <td>0.5 ml</td>
                         <td>Once</td>
                         <td></td>
@@ -134,7 +137,7 @@
                     <tr>
                         <td>69</td>
                         <td>DISC</td>
-                        <td>Influenza Virus Vaccine Inj TRIVALENT <3 years old</td>
+                        <td>Influenza Virus Vaccine Inj TRIVALENT < 3 years old</td>
                         <td>0.5 ml</td>
                         <td>Once</td>
                         <td></td>
@@ -499,6 +502,23 @@
             // `ttAdapter` wraps the suggestion engine in an adapter that
             // is compatible with the typeahead jQuery plugin
             source: bhMedications.ttAdapter()
+        });
+
+        $('#interactions-button').click(function () {
+            $('tbody tr').each(function (index, element) {
+                element = $(element);
+                element.addClass('warning');
+                var timeout = 5000 * Math.random();
+                setTimeout(function () {
+                    element.removeClass('warning');
+                    if (element.attr('id') == 'N0000021982') {
+                        var alert = $("<div class='alert alert-danger'></div>");
+                        alert.html('Talk to your doctor before using dalteparin together with aspirin. Combining these medications can increase the risk of bleeding complications. You may need a dose adjustment or more frequent monitoring by your doctor to safely use both medications. Call your doctor promptly if you experience any unusual bleeding or bruising, swelling, vomiting, blood in your urine or stools, headache, dizziness, or weakness during treatment with these medications. It is important to tell your doctor about all other medications you use, including vitamins and herbs. Do not stop using any medications without first talking to your doctor.');
+                        $('#alert-container').append(alert);
+                        element.addClass('danger');
+                    }
+                }, timeout);
+            });
         });
     </script>
 }
