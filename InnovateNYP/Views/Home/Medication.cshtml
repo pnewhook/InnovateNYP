@@ -599,6 +599,7 @@
             transcript = '';
             recognition.onresult = onDrugSpoken;
             recognition.onend = onEnd;
+            initiatedBySpeech = true;
             recognition.start();
         });
     </script>
