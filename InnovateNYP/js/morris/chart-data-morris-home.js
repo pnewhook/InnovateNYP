@@ -52,10 +52,10 @@ Morris.Area({
 Morris.Donut({
   element: 'morris-chart-donut',
   data: [
-    {label: "Referral", value: 42.7},
-    {label: "Direct", value: 8.3},
-    {label: "Social", value: 12.8},
-    {label: "Organic", value: 36.2}
+    {label: "Grains", value: 42.7},
+    {label: "Meat and Alternatives", value: 8.3},
+    {label: "Dairy", value: 12.8},
+    { label: "Vegetables", value: 36.2 }
   ],
   formatter: function (y) { return y + "%" ;}
 });

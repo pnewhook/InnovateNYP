@@ -21,6 +21,7 @@
                     <label for="medication" class="sr-only">Medication</label>
                     <input type="text" class="form-control typeahead" id="medication" name="medication" placeholder="Enter a new medication" />
                 </div>
+            <img id="ajax-spinner" src="/img/ajax-loader.gif" alt="Alternate Text" style="display:none;" />
             <button class="btn btn-primary" id="drug-voice-activate" type="button"><i class="fa fa-microphone"></i></button>
             <button type="button" id="interactions-button" class="btn btn-default">Check Interactions</button>
         </form>
@@ -179,6 +180,7 @@
 @section scripts{
     <script src="~/Scripts/typeahead.bundle.js"></script>
     <script>
+        var spokenDrug;
         $('#medication-link').addClass('active');
 
         var medications = ['Paxil',
@@ -506,6 +508,8 @@
         });
         function checkInteractions() {
             $('tbody tr').each(function (index, element) {
+                $('#alert-container').empty();
+                $('tr').removeClass('danger');
                 element = $(element);
                 element.addClass('warning');
                 var timeout = 5000 * Math.random();
@@ -516,6 +520,8 @@
                         alert.html('Talk to your doctor before using dalteparin together with aspirin. Combining these medications can increase the risk of bleeding complications. You may need a dose adjustment or more frequent monitoring by your doctor to safely use both medications. Call your doctor promptly if you experience any unusual bleeding or bruising, swelling, vomiting, blood in your urine or stools, headache, dizziness, or weakness during treatment with these medications. It is important to tell your doctor about all other medications you use, including vitamins and herbs. Do not stop using any medications without first talking to your doctor.');
                         $('#alert-container').append(alert);
                         element.addClass('danger');
+                        var msg = new SpeechSynthesisUtterance("Do not take + " + spokenDrug + "because you take Dalteparin");
+                        window.speechSynthesis.speak(msg);
                     }
                 }, timeout);
             });
@@ -526,12 +532,16 @@
 
         function onDrugSpoken(event) {
             console.log('Speech recognized.');
-            transcript = event.results[0][0].transcript;
-            console.log('User said: ' + transcript);
-            $('#medication').val(transcript);
+            spokenDrug = event.results[0][0].transcript;
+            $('#drug-voice-activate').show();
+            $('#ajax-spinner').hide();
+            console.log('User said: ' + spokenDrug);
+            $('#medication').val(spokenDrug);
             checkInteractions();
         }
         $('#drug-voice-activate').click(function () {
+            $('#drug-voice-activate').hide();
+            $('#ajax-spinner').show();
             transcript = '';
             recognition.onresult = onDrugSpoken;
             recognition.start();
