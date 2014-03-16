@@ -17,10 +17,11 @@
 <div class="row">
     <div class="col-lg-12">
         <form class="form-inline" role="form">
-            <div class="form-group">
-                <label for="medication" class="sr-only">Medication</label>
-                <input type="text" class="form-control typeahead" id="medication" name="medication" placeholder="Enter a new medication" />
-            </div>
+                <div class="form-group">
+                    <label for="medication" class="sr-only">Medication</label>
+                    <input type="text" class="form-control typeahead" id="medication" name="medication" placeholder="Enter a new medication" />
+                </div>
+            <button class="btn btn-primary" id="drug-voice-activate" type="button"><i class="fa fa-microphone"></i></button>
             <button type="button" id="interactions-button" class="btn btn-default">Check Interactions</button>
         </form>
     </div>
@@ -44,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr id='N0000021982'>
+                    <tr data-nui='N0000021982'>
                         <td>50</td>
                         <td>AUA1</td>
                         <td>Dalteparin Inj</td>
@@ -53,7 +54,7 @@
                         <td></td>
                         <td>SUBQ</td>
                     </tr>
-                    <tr>
+                    <tr data-nui='N0000148560'>
                         <td>50</td>
                         <td>AUA1</td>
                         <td>riTUXimab Inj - Non-oncology</td>
@@ -62,7 +63,7 @@
                         <td></td>
                         <td>IVPB</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000146860">
                         <td>50</td>
                         <td>AUA1</td>
                         <td>Heparin Inj</td>
@@ -71,7 +72,7 @@
                         <td></td>
                         <td>IV</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000146860">
                         <td>50</td>
                         <td>AUA1</td>
                         <td>Heparin Inj</td>
@@ -80,7 +81,7 @@
                         <td></td>
                         <td>IV PUSH</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000146860">
                         <td>50</td>
                         <td>AUA1</td>
                         <td>Heparin Inj</td>
@@ -89,7 +90,7 @@
                         <td></td>
                         <td>SUBQ</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000147049">
                         <td>100</td>
                         <td>AUC9</td>
                         <td>fentaNYL DRIP</td>
@@ -98,7 +99,7 @@
                         <td></td>
                         <td>IV</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000146069">
                         <td>50</td>
                         <td>AUA1</td>
                         <td>Potassium Chloride Oral</td>
@@ -107,7 +108,7 @@
                         <td></td>
                         <td>PO</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000145898">
                         <td>50</td>
                         <td>AUA1</td>
                         <td>Acetaminophen Tab</td>
@@ -116,7 +117,7 @@
                         <td></td>
                         <td>PO</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000020118">
                         <td>69</td>
                         <td>DISC</td>
                         <td>Influenza Virus Vaccine Inj >3 Years Old</td>
@@ -134,7 +135,7 @@
                         <td></td>
                         <td>IM</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000020118">
                         <td>69</td>
                         <td>DISC</td>
                         <td>Influenza Virus Vaccine Inj TRIVALENT < 3 years old</td>
@@ -143,7 +144,7 @@
                         <td></td>
                         <td>IM</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000145898">
                         <td>100</td>
                         <td>AUC9</td>
                         <td>Acetaminophen Cod #3 Oral</td>
@@ -161,7 +162,7 @@
                         <td></td>
                         <td>IntraMUSCULAR</td>
                     </tr>
-                    <tr>
+                    <tr data-nui="N0000146860">
                         <td>100</td>
                         <td>AUC9</td>
                         <td>Heparin Drip</td>
@@ -503,15 +504,14 @@
             // is compatible with the typeahead jQuery plugin
             source: bhMedications.ttAdapter()
         });
-
-        $('#interactions-button').click(function () {
+        function checkInteractions() {
             $('tbody tr').each(function (index, element) {
                 element = $(element);
                 element.addClass('warning');
                 var timeout = 5000 * Math.random();
                 setTimeout(function () {
                     element.removeClass('warning');
-                    if (element.attr('id') == 'N0000021982') {
+                    if (element.data('nui') == 'N0000021982') {
                         var alert = $("<div class='alert alert-danger'></div>");
                         alert.html('Talk to your doctor before using dalteparin together with aspirin. Combining these medications can increase the risk of bleeding complications. You may need a dose adjustment or more frequent monitoring by your doctor to safely use both medications. Call your doctor promptly if you experience any unusual bleeding or bruising, swelling, vomiting, blood in your urine or stools, headache, dizziness, or weakness during treatment with these medications. It is important to tell your doctor about all other medications you use, including vitamins and herbs. Do not stop using any medications without first talking to your doctor.');
                         $('#alert-container').append(alert);
@@ -519,6 +519,22 @@
                     }
                 }, timeout);
             });
+
+        }
+
+        $('#interactions-button').click(checkInteractions);
+
+        function onDrugSpoken(event) {
+            console.log('Speech recognized.');
+            transcript = event.results[0][0].transcript;
+            console.log('User said: ' + transcript);
+            $('#medication').val(transcript);
+            checkInteractions();
+        }
+        $('#drug-voice-activate').click(function () {
+            transcript = '';
+            recognition.onresult = onDrugSpoken;
+            recognition.start();
         });
     </script>
 }

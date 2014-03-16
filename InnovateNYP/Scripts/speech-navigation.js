@@ -4,11 +4,10 @@
     if (!('webkitSpeechRecognition' in window)) {
         $('#speech-navigation-nav').remove();
     } else {
-        var recognition = new webkitSpeechRecognition();
+        window.recognition = new webkitSpeechRecognition();
         console.log('Speech Recognition Object Created');
-        recognition.onresult = onResult;
     }
-    function onResult(event) {
+    function onNavResult(event) {
         console.log('Speech recognized.');
         transcript = event.results[0][0].transcript;
         console.log('User said: ' + transcript);
@@ -31,7 +30,7 @@
     var lastKeypressTime = 0;
     function KeyHandler(event)
     {
-        if ( String.fromCharCode(event.charCode).toUpperCase() == ' ' )
+        if ( String.fromCharCode(event.charCode).toUpperCase() == 'S' )
         {
             var thisKeypressTime = new Date();
             if ( thisKeypressTime - lastKeypressTime <= delta )
@@ -45,6 +44,7 @@
 
     function speechNavigation() {
         transcript = '';
+        recognition.onresult = onNavResult;
         recognition.start();
     }
 });
