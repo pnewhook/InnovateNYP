@@ -32,7 +32,7 @@
             window.speechSynthesis.speak(msg);
         } else if (transcript.indexOf('insight') !== -1) {
             location.href = '/Home/Insight';
-        }else if (transcript.indexOf('vaccinations') !== -1) {
+        }else if (transcript.indexOf('vaccination') !== -1) {
         location.href = '/Home/Vaccine';
     }
     }
