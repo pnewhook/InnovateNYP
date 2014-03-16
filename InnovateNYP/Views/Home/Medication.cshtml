@@ -518,7 +518,6 @@
 
         function checkInteractions() {
             'use strict';
-            var messages = [];
             searchedDrug = $('#medication').val();
             var problemInteractions = [];
             if (searchedDrug.toLowerCase().indexOf('aspirin') >= 0) {
@@ -526,26 +525,32 @@
             }
             $('#alert-container').empty();
             $('tr').removeClass('danger');
-            $('tbody tr').each(function (index, element) {
+            $.getJSON('/home/interaction', { drugName: searchedDrug }).done(interactionSuccess).fail(onFail);
 
-                element = $(element);
-                var nui = element.data('nui');
-                if (typeof nui === 'undefined') {
-                    return;
-                }
-                if (problemInteractions.contains(nui)) {
-                    var alert = $("<div class='alert alert-danger'></div>");
-                    var warningMessage = 'Do not mix ' + searchedDrug + ' and ' + element.find('td:nth-child(3)').text();
-                    alert.html(warningMessage);
-                    messages.push(warningMessage);
-                    $('#alert-container').append(alert);
-                    element.addClass('danger');
-                }
-            });
-            if (messages.length == 0) {
+        }
+        function interactionSuccess(problemInteractions) {
+            var messages = [];
+            if (problemInteractions.length == 0) {
                 var alert = $("<div class='alert alert-success' >You can take " + searchedDrug + ".</div>");
                 $('#alert-container').append(alert);
+            } else {
+                $('tbody tr').each(function (index, element) {
+                    element = $(element);
+                    var nui = element.data('nui');
+                    if (typeof nui === 'undefined') {
+                        return;
+                    }
+                    if (problemInteractions.contains(nui)) {
+                        var alert = $("<div class='alert alert-danger'></div>");
+                        var warningMessage = 'Do not mix ' + searchedDrug + ' and ' + element.find('td:nth-child(3)').text();
+                        alert.html(warningMessage);
+                        messages.push(warningMessage);
+                        $('#alert-container').append(alert);
+                        element.addClass('danger');
+                    }
+                });
             }
+
 
             if (initiatedBySpeech) {
                 readWarnings(messages);
@@ -553,6 +558,15 @@
             }
         }
 
+        function onFail() {
+            consle.error('Interaction request failed, using fallback.');
+            if (searchedDrug.toLocaleLowerCase() === 'aspirin') {
+                interactionSuccess(['N0000021982']);
+            } else {
+                interactionSuccess([]);
+            }
+
+        }
         function readWarnings(warnings) {
             var warningMessages = 'You can take ' + searchedDrug;
             if (warnings.length > 0) {
@@ -568,17 +582,23 @@
             console.log('Speech recognized.');
             initiatedBySpeech = true;
             searchedDrug = event.results[0][0].transcript;
-            $('#drug-voice-activate').show();
-            $('#ajax-spinner').hide();
             console.log('User said: ' + searchedDrug);
             $('#medication').val(searchedDrug);
             checkInteractions();
+        }
+        function onEnd() {
+            if (searchedDrug === '') {
+                console.warn('Speech recognition ended with no match.')
+            }
+            $('#drug-voice-activate').show();
+            $('#ajax-spinner').hide();
         }
         $('#drug-voice-activate').click(function () {
             $('#drug-voice-activate').hide();
             $('#ajax-spinner').show();
             transcript = '';
             recognition.onresult = onDrugSpoken;
+            recognition.onend = onEnd;
             recognition.start();
         });
     </script>

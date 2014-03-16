@@ -37,18 +37,12 @@
     }
     }
 
-    var delta = 500;
-    var lastKeypressTime = 0;
+
     function KeyHandler(event)
     {
-        if ( String.fromCharCode(event.charCode).toUpperCase() == 'S' )
+        if ( String.fromCharCode(event.charCode) == ' ' && event.ctrlKey )
         {
-            var thisKeypressTime = new Date();
-            if ( thisKeypressTime - lastKeypressTime <= delta )
-            {
-                speechNavigation();
-            }
-            lastKeypressTime = thisKeypressTime;
+            speechNavigation();
         }
     }
     $(window).keypress(KeyHandler);

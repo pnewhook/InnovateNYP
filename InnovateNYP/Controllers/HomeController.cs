@@ -38,5 +38,16 @@ namespace InnovateNYP.Controllers
         {
             return View();
         }
+
+        public ActionResult Interaction(string drugName)
+        {
+            var conflicts = new List<string>();
+            if (drugName.ToLower() == "aspirin")
+            {
+                conflicts.Add("N0000021982");
+                return Json(conflicts, JsonRequestBehavior.AllowGet);
+            }
+            return Json(conflicts, JsonRequestBehavior.AllowGet);
+        }
     }
 }
