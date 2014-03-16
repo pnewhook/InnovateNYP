@@ -37,15 +37,20 @@
     }
     }
 
-
+    var ctrlPressed = false;
     function KeyHandler(event)
     {
-        if ( String.fromCharCode(event.charCode) == ' ' && event.ctrlKey )
+        if (event.keyCode === 17) {
+            ctrlPressed = true;
+            setTimeout(function () { ctrlPressed = false; }, 3000);
+            return;
+        }
+        if ( event.keyCode == 77 && ctrlPressed)
         {
             speechNavigation();
         }
     }
-    $(window).keypress(KeyHandler);
+    $(window).keydown(KeyHandler);
 
     function speechNavigation() {
         transcript = '';
