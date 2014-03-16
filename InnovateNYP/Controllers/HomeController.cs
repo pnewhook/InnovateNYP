@@ -49,5 +49,10 @@ namespace InnovateNYP.Controllers
             }
             return Json(conflicts, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult FaceTracking()
+        {
+            return PartialView("_FaceTracking");
+        }
     }
 }
